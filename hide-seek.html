@@ -32,8 +32,104 @@ function shareLocation(live){localStorage.setItem('aetherwood_family_code',$('fa
 async function sendPosition(c){const a=access();const payload={type:'location',familyCode:a.code,person:a.person,mode:a.mode,lat:c.latitude,lng:c.longitude,accuracy:Math.round(c.accuracy||0),timestamp:new Date().toISOString()};players=players.filter(p=>p.person!==a.person).concat([payload]);render();await post(payload);loadLocations();setStatus('Location shared for '+a.person+' with accuracy about '+payload.accuracy+'m.');}
 async function post(payload){if(!syncReady())return;try{await fetch(CFG.SCRIPT_URL,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)})}catch(e){console.warn(e)}}
 function loadLocations(){const a=access();if(!syncReady()){render();setStatus('Local map only. Add Apps Script URL for family GPS game sync.');return}const cb='locCb_'+Date.now();window[cb]=data=>{try{players=(data&&data.locations)||[];render();setStatus('Map refreshed.')}finally{delete window[cb];script.remove()}};const script=document.createElement('script');script.src=CFG.SCRIPT_URL+'?action=list&code='+encodeURIComponent(a.code)+'&callback='+cb;document.body.appendChild(script)}
-function render(){const map=$('map');if(!players.length){map.innerHTML='';$('players').innerHTML='<p class="status">No one has shared a game location yet.</p>';return}const latest={};players.forEach(p=>{latest[p.person]=p});const arr=Object.values(latest);let minLat=Math.min(...arr.map(p=>Number(p.lat))),maxLat=Math.max(...arr.map(p=>Number(p.lat))),minLng=Math.min(...arr.map(p=>Number(p.lng))),maxLng=Math.max(...arr.map(p=>Number(p.lng)));if(minLat===maxLat){minLat-=0.001;maxLat+=0.001}if(minLng===maxLng){minLng-=0.001;maxLng+=0.001}map.innerHTML=arr.map(p=>{let x=(Number(p.lng)-minLng)/(maxLng-minLng)*80+10;let y=90-((Number(p.lat)-minLat)/(maxLat-minLat)*80+10);let icon=p.mode==='Hiding'?'🙈':p.mode==='Seeking'?'🔎':'🏕️';return `<div class="pin" style="left:${x}%;top:${y}%"><b>${icon}</b>${esc(p.person)}</div>`}).join('');$('players').innerHTML=arr.map(p=>`<article class="card ${p.mode==='Hiding'?'danger':''}"><h3>${esc(p.person)} · ${esc(p.mode||'Playing')}</h3><div class="meta">Accuracy about ${esc(p.accuracy||'?')}m · ${timeAgo(p.timestamp)}</div><div class="status">Coordinates are stored in the family sheet. Clear the Locations tab when the game is done if you want a clean slate.</div></article>`).join('')}
-function timeAgo(t){let d=new Date(t||Date.now());let mins=Math.round((Date.now()-d.getTime())/60000);if(isNaN(mins))return 'just now';if(mins<1)return 'just now';if(mins===1)return '1 minute ago';return mins+' minutes ago'}function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+let leafletMap = null;
+let playerMarkers = [];
+
+function render() {
+  const mapEl = $("map");
+
+  if (!players.length) {
+    if (!leafletMap) {
+      leafletMap = L.map("map").setView([-26.65, 153.08], 11);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "&copy; OpenStreetMap"
+      }).addTo(leafletMap);
+    }
+
+    $("players").innerHTML = '<p class="status">No one has shared a game location yet.</p>';
+    return;
+  }
+
+  if (!leafletMap) {
+    leafletMap = L.map("map").setView([-26.65, 153.08], 11);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "&copy; OpenStreetMap"
+    }).addTo(leafletMap);
+  }
+
+  playerMarkers.forEach(marker => leafletMap.removeLayer(marker));
+  playerMarkers = [];
+
+  const latest = {};
+  players.forEach(p => {
+    latest[p.person] = p;
+  });
+
+  const arr = Object.values(latest).filter(p => p.lat && p.lng);
+  const bounds = [];
+
+  arr.forEach(p => {
+    const lat = Number(p.lat);
+    const lng = Number(p.lng);
+
+    if (Number.isNaN(lat) || Number.isNaN(lng)) return;
+
+    const icon = p.mode === "Hiding" ? "🙈" : p.mode === "Seeking" ? "🔎" : "🏕️";
+    const marker = L.marker([lat, lng]).addTo(leafletMap);
+
+    marker.bindPopup(`
+      <strong>${esc(icon)} ${esc(p.person)}</strong><br>
+      ${esc(p.mode || "Playing")}<br>
+      Accuracy about ${esc(p.accuracy || "?")}m<br>
+      ${timeAgo(p.timestamp)}
+    `);
+
+    playerMarkers.push(marker);
+    bounds.push([lat, lng]);
+  });
+
+  if (bounds.length === 1) {
+    leafletMap.setView(bounds[0], 16);
+  }
+
+  if (bounds.length > 1) {
+    leafletMap.fitBounds(bounds, { padding: [40, 40] });
+  }
+
+  setTimeout(() => leafletMap.invalidateSize(), 150);
+
+  $("players").innerHTML = arr.map(p => `
+    <article class="card ${p.mode === "Hiding" ? "danger" : ""}">
+      <h3>${esc(p.person)} · ${esc(p.mode || "Playing")}</h3>
+      <div class="meta">Accuracy about ${esc(p.accuracy || "?")}m · ${timeAgo(p.timestamp)}</div>
+      <div class="status">Last shared family location. Clear the Locations sheet when the game is done if you want a clean slate.</div>
+    </article>
+  `).join("");
+}
+
+function timeAgo(t) {
+  let d = new Date(t || Date.now());
+  let mins = Math.round((Date.now() - d.getTime()) / 60000);
+
+  if (isNaN(mins)) return "just now";
+  if (mins < 1) return "just now";
+  if (mins === 1) return "1 minute ago";
+  return mins + " minutes ago";
+}
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>'"]/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "'": "&#39;",
+    '"': "&quot;"
+  }[c]));
+}
+
 loadLocations();
 </script>
 </body>
