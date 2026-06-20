@@ -46,7 +46,7 @@ function safeJson(s){try{return JSON.parse(s||'{}')}catch(e){return{}}}
 async function post(payload){if(!syncReady())return;try{await fetch(CFG.SCRIPT_URL,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)})}catch(e){console.warn(e)}}
 function loadRallies(){const a=access();if(!syncReady()){render(local);setStatus('Local rally board loaded. Add Apps Script URL for shared family sync.');return}const cb='rallyCb_'+Date.now();window[cb]=data=>{try{let rallies=(data&&data.rallies)||[];local=rallies.concat(local.filter(l=>!rallies.some(r=>r.rallyId===l.rallyId)));saveLocal();render(local);setStatus('Shared rally board loaded.')}finally{delete window[cb];script.remove()}};const script=document.createElement('script');script.src=CFG.SCRIPT_URL+'?action=list&code='+encodeURIComponent(a.code)+'&callback='+cb;document.body.appendChild(script)}
 function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-render(local);
+loadRallies();
 </script>
 </body>
 </html>
