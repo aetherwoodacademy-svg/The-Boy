@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aetherwood Memories</title>
+<script src="aetherwood_app_config.js"></script>
+<style>
+:root{--ink:#202338;--cream:#fffaf0;--gold:#ffcf5a;--pink:#ff6aa2;--blue:#66c7ff;--green:#74e4c8}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:radial-gradient(circle at top left,#fff6a8 0,transparent 28%),linear-gradient(135deg,#10223f,#501e67 55%,#ff8f70);padding:18px}.wrap{width:min(1120px,94vw);margin:0 auto}.portal-nav{text-align:center;margin:0 auto 18px}.portal-nav a{display:inline-block;margin:6px;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.88);color:#202338;text-decoration:none;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.13)}.hero,.panel{background:rgba(255,250,240,.94);border-radius:26px;box-shadow:0 18px 45px rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.55)}.hero{padding:28px;margin-bottom:18px;text-align:center}.hero h1{font-size:clamp(2.2rem,7vw,5rem);line-height:.9;margin:0 0 10px;letter-spacing:-.06em}.hero p{margin:0;color:#536071}.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:18px}input,button{font:inherit;border-radius:16px;border:2px solid #ece5d5;padding:12px}button{border:0;font-weight:900;cursor:pointer;background:linear-gradient(135deg,var(--gold),#ff9367)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}.card{background:rgba(255,250,240,.96);border-radius:24px;overflow:hidden;box-shadow:0 12px 28px rgba(0,0,0,.18)}.card img{width:100%;height:230px;object-fit:cover;display:block;background:#eee}.card .body{padding:14px}.tag{display:inline-block;background:#eef6ff;color:#27506f;border-radius:999px;padding:6px 9px;font-size:.75rem;font-weight:900;text-transform:uppercase}.card h3{margin:8px 0 4px}.card p{color:#536071;margin:0}.empty{padding:28px;text-align:center}.status{margin-top:12px;color:#536071}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="portal-nav"><a href="index.html">Portal</a><a href="smoothie.html">Smoothie Bar</a><a href="holiday-adventures.html">Adventures</a><a href="rally.html">Rally Board</a><a href="hide-seek.html">Hide and Seek</a><a href="memories.html">Memories</a></nav>
+<section class="hero">
+<h1>Memory Gallery</h1>
+<p>The shared vault for holiday photos, quest notes and excellent family nonsense.</p>
+<div class="controls">
+<input id="familyCode" placeholder="Family code">
+<button id="loadBtn">Load family memories</button>
+</div>
+<div class="status" id="status">Add the family code and load the gallery.</div>
+</section>
+<section class="grid" id="gallery"></section>
+</div>
+<script>
+const CFG=window.AETHERWOOD_CONFIG||{};
+const local=JSON.parse(localStorage.getItem('holidayQuestBoard.v2')||'null');
+const el=id=>document.getElementById(id);
+el('familyCode').value=(local&&local.familyCode)||'';
+el('loadBtn').onclick=loadMemories;
+function loadLocal(){let photos=[];(local?.items||[]).forEach(i=>(i.photos||[]).forEach(p=>photos.push({questTitle:i.title,caption:i.notes,imageUrl:p.url,person:local.person||'The Boy',timestamp:'This device'})));render(photos);}
+function loadMemories(){if(!CFG.SCRIPT_URL||CFG.SCRIPT_URL.includes('PASTE_')){el('status').textContent='Cloud sync is not configured yet, showing memories from this device.';loadLocal();return;}let code=encodeURIComponent(el('familyCode').value.trim());let cb='aetherwoodMemories'+Date.now();window[cb]=(data)=>{delete window[cb];if(!data.ok){el('status').textContent=data.error||'Could not load memories.';loadLocal();return;}el('status').textContent='Shared memories loaded.';render(data.photos||[]);};let s=document.createElement('script');s.src=CFG.SCRIPT_URL+'?action=list&code='+code+'&callback='+cb;document.body.appendChild(s);}
+function render(photos){let gallery=el('gallery');if(!photos.length){gallery.innerHTML='<div class="panel empty">No photo memories yet. Time to make trouble.</div>';return;}gallery.innerHTML=photos.slice().reverse().map(p=>`<article class="card"><img src="${p.imageUrl}" alt="${escapeHtml(p.questTitle||'Memory')}"><div class="body"><span class="tag">${escapeHtml(p.person||'Family')}</span><h3>${escapeHtml(p.questTitle||'Adventure')}</h3><p>${escapeHtml(p.caption||'A fine moment from the holiday vault.')}</p></div></article>`).join('');}
+function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+loadLocal();
+</script>
+</body>
+</html>
