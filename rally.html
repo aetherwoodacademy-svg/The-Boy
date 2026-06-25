@@ -8,77 +8,179 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 <script src="aetherwood_app_config.js"></script>
 <style>
-:root{--ink:#20152d;--cream:#fff8ee;--gold:#ffd979;--pink:#f5a6ff;--blue:#67d7ff;--green:#9ef2bd;--panel:rgba(255,248,238,.94);--dark:#070826;--violet:#5b2a93;--shadow:0 24px 70px rgba(0,0,0,.28)}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Inter,system-ui,sans-serif;color:var(--ink);padding:18px;background:linear-gradient(rgba(7,8,38,.80),rgba(7,8,38,.90)),url("family-crest-bg.webp") center top/cover fixed,linear-gradient(135deg,#070826,#101b55 60%,#501e67)}
-.wrap{width:min(1120px,96vw);margin:0 auto}.nav{text-align:center;margin:8px 0 18px}.nav a{display:inline-block;margin:5px;padding:10px 13px;border-radius:999px;background:rgba(255,248,238,.9);color:#20152d;text-decoration:none;font-weight:900}.hero,.panel{background:var(--panel);border-radius:28px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.55)}.hero{padding:26px;display:grid;grid-template-columns:160px 1fr;gap:18px;align-items:center;margin-bottom:18px}.crest{width:150px;border-radius:24px;box-shadow:0 0 30px rgba(255,217,121,.35)}h1{font-family:Georgia,serif;font-size:clamp(2rem,6vw,4.6rem);line-height:.94;margin:0;color:#20152d}.sub{font-size:1.08rem;color:#536071;line-height:1.45;margin:10px 0 0}.panel{padding:22px;margin-bottom:18px}h2{font-family:Georgia,serif;margin:0 0 12px;font-size:1.7rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.field{display:grid;gap:6px}label{font-weight:900;color:#334155}input,select,textarea{width:100%;border:2px solid #e6dcc8;border-radius:16px;padding:12px;font:inherit;background:white;color:#20152d}textarea{min-height:84px;resize:vertical}.btn{border:0;border-radius:999px;padding:12px 16px;font-weight:950;cursor:pointer;background:#20152d;color:white;box-shadow:0 10px 22px rgba(0,0,0,.16)}.btn.gold{background:linear-gradient(135deg,#ffd979,#ff9367);color:#20152d}.btn.good{background:linear-gradient(135deg,#9ef2bd,#67d7ff);color:#20152d}.btn.pink{background:linear-gradient(135deg,#f5a6ff,#ff6aa2);color:#20152d}.btn.small{padding:9px 12px;font-size:.9rem}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.rallies{display:grid;gap:14px}.card{background:white;border-radius:22px;padding:16px;border-left:8px solid #ffd979;box-shadow:0 12px 28px rgba(0,0,0,.12)}.card.closed{opacity:.65;border-left-color:#94a3b8}.card.expired{opacity:.72;border-left-color:#ff9367}.card h3{margin:0;font-size:1.35rem}.meta{color:#64748b;font-weight:800;margin:6px 0 10px}.msg{background:#fff7d6;border-radius:14px;padding:11px;margin:10px 0;color:#334155}.people{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.pill{border-radius:999px;background:#f1f5f9;padding:7px 10px;font-weight:900}.status{font-size:.92rem;color:#64748b}.empty{font-style:italic;color:#64748b}.notice{display:none;background:rgba(158,242,189,.32);border:2px solid rgba(158,242,189,.95);padding:14px;border-radius:18px;color:#164e33;font-weight:950;margin-bottom:18px}.notice.show{display:block}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.filters label{display:flex;align-items:center;gap:7px;background:#fff;border-radius:999px;padding:9px 12px}.filters input{width:auto}.dangerText{color:#be123c;font-weight:900}@media(max-width:720px){.hero{grid-template-columns:1fr;text-align:center}.crest{margin:auto}.actions .btn{width:100%}}
+:root{
+  --ink:#243126;
+  --deep:#142418;
+  --forest:#294936;
+  --pine:#3b5d42;
+  --moss:#6d8b52;
+  --fern:#8da96b;
+  --parchment:#f4efdf;
+  --paper:#fffaf0;
+  --campfire:#d88b3d;
+  --ember:#b4532d;
+  --river:#5f8d95;
+  --stone:#6d7168;
+  --bark:#5b4331;
+  --mist:#d7e2dc;
+  --shadow:0 24px 70px rgba(0,0,0,.32);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Inter,system-ui,sans-serif;
+  color:var(--ink);
+  padding:18px;
+  background:
+    radial-gradient(circle at 16% 10%,rgba(216,226,220,.25),transparent 25%),
+    radial-gradient(circle at 82% 12%,rgba(216,139,61,.22),transparent 25%),
+    linear-gradient(rgba(20,36,24,.82),rgba(20,36,24,.92)),
+    url("family-crest-bg.webp") center top/cover fixed,
+    linear-gradient(135deg,#142418,#294936 58%,#5b4331);
+}
+.wrap{width:min(1120px,96vw);margin:0 auto}
+.nav{text-align:center;margin:8px 0 18px}
+.nav a{display:inline-block;margin:5px;padding:10px 13px;border-radius:999px;background:rgba(244,239,223,.94);color:var(--deep);text-decoration:none;font-weight:900;border:1px solid rgba(91,67,49,.25)}
+.nav a:hover{background:#fffaf0;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+.hero,.panel{background:rgba(244,239,223,.95);border-radius:28px;box-shadow:var(--shadow);border:1px solid rgba(255,250,240,.68)}
+.hero{padding:26px;display:grid;grid-template-columns:160px 1fr;gap:18px;align-items:center;margin-bottom:18px;background:linear-gradient(135deg,rgba(244,239,223,.96),rgba(215,226,220,.93))}
+.crest{width:150px;border-radius:24px;box-shadow:0 0 30px rgba(216,139,61,.35)}
+h1{font-family:Georgia,serif;font-size:clamp(2rem,6vw,4.6rem);line-height:.94;margin:0;color:var(--deep)}
+.sub{font-size:1.08rem;color:#536071;line-height:1.45;margin:10px 0 0}
+.panel{padding:22px;margin-bottom:18px}
+h2{font-family:Georgia,serif;margin:0 0 12px;font-size:1.7rem;color:var(--forest)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.field{display:grid;gap:6px}
+label{font-weight:900;color:#334155}
+input,select,textarea{width:100%;border:2px solid #d9cfba;border-radius:16px;padding:12px;font:inherit;background:#fffaf0;color:var(--ink)}
+textarea{min-height:84px;resize:vertical}
+.btn{border:0;border-radius:999px;padding:12px 16px;font-weight:950;cursor:pointer;background:var(--forest);color:white;box-shadow:0 10px 22px rgba(0,0,0,.16)}
+.btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.btn.gold{background:linear-gradient(135deg,var(--campfire),#f0c36a);color:#2b1b10}
+.btn.good{background:linear-gradient(135deg,var(--fern),var(--river));color:#102014}
+.btn.pink{background:linear-gradient(135deg,var(--bark),var(--ember));color:#fffaf0}
+.btn.soft{background:#e8dfca;color:var(--deep);border:1px solid rgba(91,67,49,.22)}
+.btn.danger{background:linear-gradient(135deg,#8d2f23,var(--ember));color:#fffaf0}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.rallies{display:grid;gap:14px}
+.card{background:var(--paper);border-radius:22px;padding:16px;border-left:8px solid var(--campfire);box-shadow:0 12px 28px rgba(0,0,0,.12);position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(109,139,82,.08),transparent 48%,rgba(216,139,61,.07));pointer-events:none}
+.card.closed{opacity:.65;border-left-color:var(--stone)}
+.card.expired{opacity:.72;border-left-color:var(--bark)}
+.card h3{margin:0;font-size:1.35rem;color:var(--deep)}
+.meta{color:#64748b;font-weight:800;margin:6px 0 10px}
+.msg{background:#f5edcf;border-radius:14px;padding:11px;margin:10px 0;color:#334155;border:1px solid rgba(91,67,49,.12)}
+.people{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.pill{border-radius:999px;background:#e9efe4;padding:7px 10px;font-weight:900;color:var(--forest);border:1px solid rgba(109,139,82,.25)}
+.status{font-size:.92rem;color:#64748b}
+.empty{font-style:italic;color:#64748b}
+.notice{background:rgba(216,139,61,.18);border:1px solid rgba(216,139,61,.55);padding:12px;border-radius:18px;color:#3b2f13}
+.alert{position:sticky;top:10px;z-index:20;display:none;margin-bottom:14px;padding:14px 16px;border-radius:18px;background:linear-gradient(135deg,var(--campfire),#f0c36a);color:#29180b;font-weight:950;box-shadow:0 18px 35px rgba(0,0,0,.22);border:1px solid rgba(255,250,240,.7)}
+.alert.show{display:block;animation:pop .22s ease-out}
+@keyframes pop{from{transform:translateY(-8px);opacity:.2}to{transform:translateY(0);opacity:1}}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}.toggle{display:flex;gap:8px;align-items:center;font-weight:900;color:#334155}.toggle input{width:auto}.counts{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.small{font-size:.88rem;color:#64748b}.creator-tools{border-top:1px dashed rgba(91,67,49,.28);padding-top:10px;margin-top:10px}
+@media(max-width:720px){.hero{grid-template-columns:1fr;text-align:center}.crest{margin:auto}.actions .btn{width:100%}.toolbar{display:block}.toggle{margin-top:10px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <nav class="nav"><a href="index.html">Portal</a><a href="holiday-adventures.html">Adventures</a><a href="rally.html">Rally Board</a><a href="hide-seek.html">Hide and Seek</a><a href="memories.html">Memories</a></nav>
-<section class="hero"><img class="crest" src="family-crest.png" alt="Ansla Pirate Family crest"><div><h1>I'm going.<br>Is anyone coming?</h1><p class="sub">Post a mini adventure invite, then Dadrew, The Boy and Mumgela can join, maybe, or politely remain snack based observers.</p></div></section>
-<div class="notice" id="notice">🏴‍☠️ New rally posted!</div>
+<div id="newAlert" class="alert">🏴‍☠️ New rally in town!</div>
+<section class="hero"><img class="crest" src="family-crest.png" alt="Ansla Pirate Family crest"><div><h1>I'm going.<br>Is anyone coming?</h1><p class="sub">Launch an outdoorsy family rally, summon the crew, and see who is joining the adventure.</p></div></section>
 <section class="panel">
   <h2>Family access</h2>
   <div class="grid"><div class="field"><label>Your pirate name</label><select id="person"><option>Mumgela</option><option>Dadrew</option><option>The Boy</option><option>Sparkles</option></select></div><div class="field"><label>Family code</label><input id="familyCode" placeholder="family code"></div><div class="field"><label>&nbsp;</label><button class="btn good" id="saveAccess">Save and load rallies</button></div></div>
-  <p class="status" id="status">Ready.</p>
+  <p class="status" id="status">Ready. Shared rallies load through the family code.</p>
 </section>
 <section class="panel">
   <h2>Start a rally</h2>
   <div class="grid"><div class="field"><label>Adventure</label><input id="title" placeholder="Beach wave play, pizza making, bike ride..."></div><div class="field"><label>When</label><input type="datetime-local" id="when"></div><div class="field"><label>Where</label><input id="where" placeholder="Home, beach, cafe, secret quest zone..."></div></div>
   <div class="field" style="margin-top:10px"><label>Message</label><textarea id="message" placeholder="I'm going. Is anyone coming?"></textarea></div>
-  <div class="actions"><button class="btn gold" id="createRally">Launch rally</button><button class="btn" id="refresh">Refresh board</button></div>
+  <div class="actions"><button class="btn gold" id="createRally">Launch rally</button><button class="btn" id="refresh">Refresh board</button><button class="btn soft" id="testAlert">Test alert</button></div>
 </section>
-<section class="panel"><h2>Open rallies</h2><div class="filters"><label><input type="checkbox" id="showExpired"> Show expired</label><label><input type="checkbox" id="soundOn"> Sound/vibrate alerts</label></div><div id="rallies" class="rallies" style="margin-top:14px"><p class="empty">No rallies loaded yet.</p></div></section>
+<section class="panel"><div class="toolbar"><h2>Open rallies</h2><label class="toggle"><input type="checkbox" id="showOld"> Show closed and expired rallies</label></div><div id="rallies" class="rallies"><p class="empty">No rallies loaded yet.</p></div></section>
 </div>
 <script>
 const CFG=window.AETHERWOOD_CONFIG||{};
 const LS='aetherwood_rally_v2';
 let local=JSON.parse(localStorage.getItem(LS)||'[]');
-let lastSeenIds=JSON.parse(localStorage.getItem('aetherwood_seen_rallies')||'[]');
+let seenIds=new Set(JSON.parse(localStorage.getItem('aetherwood_seen_rallies')||'[]'));
 let firstLoad=true;
+let refreshTimer=null;
 const $=id=>document.getElementById(id);
 function access(){return{person:$('person').value,code:$('familyCode').value.trim()||CFG.FAMILY_CODE||''}}
 function syncReady(){return CFG.SCRIPT_URL&&CFG.SCRIPT_URL.includes('script.google.com')}
 function saveLocal(){localStorage.setItem(LS,JSON.stringify(local))}
+function saveSeen(){localStorage.setItem('aetherwood_seen_rallies',JSON.stringify([...seenIds]))}
 function setStatus(t){$('status').textContent=t}
-function rememberAccess(){localStorage.setItem('aetherwood_family_code',$('familyCode').value.trim());localStorage.setItem('aetherwood_person',$('person').value)}
 $('familyCode').value=localStorage.getItem('aetherwood_family_code')||CFG.FAMILY_CODE||'';
 $('person').value=localStorage.getItem('aetherwood_person')||'Mumgela';
-$('soundOn').checked=localStorage.getItem('aetherwood_rally_sound')==='yes';
-$('showExpired').checked=localStorage.getItem('aetherwood_show_expired')==='yes';
-$('saveAccess').onclick=()=>{rememberAccess();loadRallies()};
-$('refresh').onclick=()=>loadRallies(true);
-$('soundOn').onchange=()=>localStorage.setItem('aetherwood_rally_sound',$('soundOn').checked?'yes':'no');
-$('showExpired').onchange=()=>{localStorage.setItem('aetherwood_show_expired',$('showExpired').checked?'yes':'no');render(local)};
+$('saveAccess').onclick=()=>{localStorage.setItem('aetherwood_family_code',$('familyCode').value.trim());localStorage.setItem('aetherwood_person',$('person').value);loadRallies()};
+$('refresh').onclick=()=>loadRallies();
+$('showOld').onchange=()=>render(local);
+$('testAlert').onclick=()=>notify('🏴‍☠️ Test rally alert! The wilderness beacon works.');
 $('createRally').onclick=async()=>{
-  const a=access();rememberAccess();
-  const rally={rallyId:'r'+Date.now(),familyCode:a.code,person:a.person,title:$('title').value.trim(),when:$('when').value,where:$('where').value.trim(),message:$('message').value.trim()||"I'm going. Is anyone coming?",responses:{},status:'open'};
+  const a=access();
+  const whenValue=$('when').value;
+  const rally={rallyId:'r'+Date.now(),familyCode:a.code,person:a.person,title:$('title').value.trim(),when:whenValue,where:$('where').value.trim(),message:$('message').value.trim()||"I'm going. Is anyone coming?",responses:{},status:'open'};
   if(!rally.title)return alert('Give the rally an adventure name first.');
-  if(!rally.when)return alert('Choose a date and time for the rally.');
-  local=mergeRallies([rally],local);saveLocal();render(local);
-  await post({type:'rally',...rally});
+  if(!rally.when)return alert('Choose a date and time so the rally does not become haunted by 1899.');
+  local.unshift(rally);seenIds.add(rally.rallyId);saveSeen();saveLocal();render(local);
+  await post({type:'rally',familyCode:a.code,...rally});
   $('title').value='';$('when').value='';$('where').value='';$('message').value='';
   setStatus('Rally launched. Family chaos beacon is lit.');
-  setTimeout(()=>loadRallies(true),900);
+  setTimeout(loadRallies,900);
 };
-async function respond(rallyId,response){const a=access();const r=local.find(x=>String(x.rallyId)===String(rallyId));if(r){r.responses=typeof r.responses==='string'?safeJson(r.responses):r.responses||{};r.responses[a.person]=response;saveLocal();render(local)}await post({type:'rsvp',familyCode:a.code,rallyId,person:a.person,response});setTimeout(()=>loadRallies(true),900)}
-async function closeRally(rallyId){if(!confirm('Close this rally and hide it from the open board?'))return;local=local.map(r=>String(r.rallyId)===String(rallyId)?{...r,status:'closed'}:r);saveLocal();render(local);await post({type:'closeRally',familyCode:access().code,rallyId});setTimeout(()=>loadRallies(true),900)}
-async function deleteRally(rallyId){if(!confirm('Delete this rally permanently?'))return;local=local.filter(r=>String(r.rallyId)!==String(rallyId));saveLocal();render(local);await post({type:'deleteRally',familyCode:access().code,rallyId});setTimeout(()=>loadRallies(true),900)}
-function render(items){let arr=(items||[]).filter(r=>r.status!=='closed');if(!$('showExpired').checked)arr=arr.filter(r=>!isExpired(r.when));if(!arr.length){$('rallies').innerHTML='<p class="empty">No open rallies. Start one and summon the crew.</p>';return}$('rallies').innerHTML=arr.map(r=>{let responses=typeof r.responses==='string'?safeJson(r.responses):r.responses||{};let people=Object.entries(responses).map(([p,v])=>`<span class="pill">${esc(v)} ${esc(p)}</span>`).join('')||'<span class="pill">No replies yet</span>';let expired=isExpired(r.when);let dateLabel=formatWhen(r.when);return `<article class="card ${expired?'expired':''}"><h3>${esc(r.title)}</h3><div class="meta">Started by ${esc(r.person||'Mystery pirate')} · ${esc(dateLabel)} ${r.where?' · '+esc(r.where):''}</div>${expired?'<div class="dangerText">This rally time has passed.</div>':''}<div class="msg">${esc(r.message||"I'm going. Is anyone coming?")}</div><div class="people">${people}</div><div class="actions"><button class="btn good small" onclick="respond('${esc(r.rallyId)}','✅ Coming')">I'm in</button><button class="btn gold small" onclick="respond('${esc(r.rallyId)}','🤔 Maybe')">Maybe</button><button class="btn pink small" onclick="respond('${esc(r.rallyId)}','🌙 Not today')">Not today</button><button class="btn small" onclick="closeRally('${esc(r.rallyId)}')">Close</button><button class="btn pink small" onclick="deleteRally('${esc(r.rallyId)}')">Delete</button></div></article>`}).join('')}
+async function respond(rallyId,response){const a=access();const r=local.find(x=>x.rallyId===rallyId);if(r){r.responses=parseResponses(r.responses);r.responses[a.person]=response;saveLocal();render(local)}await post({type:'rsvp',familyCode:a.code,rallyId,person:a.person,response});setTimeout(loadRallies,900)}
+async function closeRally(rallyId){const a=access();const r=local.find(x=>x.rallyId===rallyId);if(!r||r.person!==a.person)return alert('Only the pirate who launched this rally can close it.');if(!confirm('Close this rally? It will disappear from the open board.'))return;r.status='closed';saveLocal();render(local);await post({type:'closeRally',familyCode:a.code,rallyId,person:a.person});setTimeout(loadRallies,900)}
+async function deleteRally(rallyId){const a=access();const r=local.find(x=>x.rallyId===rallyId);if(!r||r.person!==a.person)return alert('Only the pirate who launched this rally can delete it.');if(!confirm('Delete this rally from the family board?'))return;local=local.filter(x=>x.rallyId!==rallyId);saveLocal();render(local);await post({type:'deleteRally',familyCode:a.code,rallyId,person:a.person});setTimeout(loadRallies,900)}
+function render(items){
+  const showOld=$('showOld').checked;
+  const filtered=(items||[]).filter(r=>showOld||(!isExpired(r.when)&&String(r.status||'open')==='open'));
+  if(!filtered.length){$('rallies').innerHTML='<p class="empty">No open rallies. Start one and summon the crew.</p>';return}
+  const a=access();
+  $('rallies').innerHTML=filtered.map(r=>{
+    let responses=parseResponses(r.responses);
+    let counts=countResponses(responses);
+    let people=Object.entries(responses).map(([p,v])=>`<span class="pill">${esc(v)} ${esc(p)}</span>`).join('')||'<span class="pill">No replies yet</span>';
+    let mine=r.person===a.person;
+    let classes=['card'];if(String(r.status||'open')!=='open')classes.push('closed');if(isExpired(r.when))classes.push('expired');
+    let tools=mine?`<div class="actions creator-tools"><button class="btn soft" onclick="closeRally('${esc(r.rallyId)}')">Close rally</button><button class="btn danger" onclick="deleteRally('${esc(r.rallyId)}')">Delete rally</button></div>`:'';
+    return `<article class="${classes.join(' ')}"><h3>${esc(r.title||'Untitled rally')}</h3><div class="meta">Started by ${esc(r.person||'Mystery pirate')} · ${formatWhen(r.when)} ${r.where?' · 📍 '+esc(r.where):''}</div><div class="counts"><span class="pill">✅ Coming ${counts.coming}</span><span class="pill">🤔 Maybe ${counts.maybe}</span><span class="pill">🌙 Not today ${counts.nope}</span></div><div class="msg">${esc(r.message||"I'm going. Is anyone coming?")}</div><div class="people">${people}</div><div class="actions"><button class="btn good" onclick="respond('${esc(r.rallyId)}','✅ Coming')">I'm in</button><button class="btn gold" onclick="respond('${esc(r.rallyId)}','🤔 Maybe')">Maybe</button><button class="btn pink" onclick="respond('${esc(r.rallyId)}','🌙 Not today')">Not today</button></div>${tools}<div class="small">${String(r.status||'open')==='open'?'Open rally':'Closed rally'}${isExpired(r.when)?' · expired':''}</div></article>`
+  }).join('')
+}
+function parseResponses(r){if(typeof r==='string')return safeJson(r);return r||{}}
+function countResponses(responses){let c={coming:0,maybe:0,nope:0};Object.values(responses||{}).forEach(v=>{if(String(v).includes('Coming'))c.coming++;else if(String(v).includes('Maybe'))c.maybe++;else if(String(v).includes('Not today'))c.nope++});return c}
 function safeJson(s){try{return JSON.parse(s||'{}')}catch(e){return{}}}
 async function post(payload){if(!syncReady())return;try{await fetch(CFG.SCRIPT_URL,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)})}catch(e){console.warn(e)}}
-function loadRallies(manual=false){const a=access();if(!syncReady()){render(local);setStatus('Local rally board loaded. Add Apps Script URL for shared family sync.');return}const cb='rallyCb_'+Date.now();window[cb]=data=>{try{let rallies=(data&&data.rallies)||[];rallies=rallies.map(normaliseRally);detectNewRallies(rallies);local=mergeRallies(rallies,local);saveLocal();render(local);setStatus('Shared rally board loaded. Last checked '+new Date().toLocaleTimeString());}finally{delete window[cb];script.remove()}};const script=document.createElement('script');script.src=CFG.SCRIPT_URL+'?action=list&code='+encodeURIComponent(a.code)+'&callback='+cb+'&t='+Date.now();document.body.appendChild(script)}
-function mergeRallies(primary,secondary){const map={};[...(secondary||[]),...(primary||[])].forEach(r=>{if(r&&r.rallyId)map[String(r.rallyId)]=normaliseRally(r)});return Object.values(map).sort((a,b)=>new Date(a.when||a.createdAt||0)-new Date(b.when||b.createdAt||0))}
-function normaliseRally(r){return{rallyId:r.rallyId||r.id||('r'+Date.now()),familyCode:r.familyCode||access().code,person:r.person||r.host||'Mystery pirate',title:r.title||r.adventure||'Untitled rally',when:r.when||'',where:r.where||'',message:r.message||"I'm going. Is anyone coming?",responses:r.responses||{},status:r.status||'open',createdAt:r.createdAt||r.timestamp||''}}
-function detectNewRallies(rallies){const ids=rallies.map(r=>String(r.rallyId));const newOnes=ids.filter(id=>!lastSeenIds.includes(id));if(!firstLoad&&newOnes.length){showNotice('🏴‍☠️ New rally posted!');notify()}firstLoad=false;lastSeenIds=Array.from(new Set([...lastSeenIds,...ids])).slice(-80);localStorage.setItem('aetherwood_seen_rallies',JSON.stringify(lastSeenIds))}
-function showNotice(t){const n=$('notice');n.textContent=t;n.classList.add('show');setTimeout(()=>n.classList.remove('show'),5500)}
-function notify(){if(!$('soundOn').checked)return;if(navigator.vibrate)navigator.vibrate([180,90,180]);try{const AudioCtx=window.AudioContext||window.webkitAudioContext;const ctx=new AudioCtx();const osc=ctx.createOscillator();const gain=ctx.createGain();osc.connect(gain);gain.connect(ctx.destination);osc.frequency.value=660;gain.gain.value=.05;osc.start();setTimeout(()=>{osc.stop();ctx.close()},160)}catch(e){}}
-function isExpired(value){if(!value)return false;const d=new Date(value);if(isNaN(d))return false;return d.getTime()<Date.now()-30*60*1000}
-function formatWhen(value){if(!value)return 'Time unknown';const d=new Date(value);if(isNaN(d))return value;return d.toLocaleString([], {weekday:'short', day:'numeric', month:'short', hour:'numeric', minute:'2-digit'})}
+function loadRallies(){
+  const a=access();
+  if(!syncReady()){render(local);setStatus('Local rally board loaded. Add Apps Script URL for shared family sync.');return}
+  const cb='rallyCb_'+Date.now();
+  const script=document.createElement('script');
+  window[cb]=data=>{try{
+    let rallies=(data&&data.rallies)||[];
+    rallies=rallies.map(normaliseRally);
+    const newOnes=rallies.filter(r=>r.rallyId&&!seenIds.has(r.rallyId));
+    if(!firstLoad&&newOnes.length){notify(`🏴‍☠️ New rally in town! ${newOnes[0].person||'A pirate'} launched ${newOnes[0].title||'an adventure'}.`)}
+    rallies.forEach(r=>{if(r.rallyId)seenIds.add(r.rallyId)});saveSeen();
+    local=rallies.concat(local.filter(l=>!rallies.some(r=>r.rallyId===l.rallyId)));
+    saveLocal();render(local);setStatus('Shared rally board loaded. Auto refresh is on.');firstLoad=false;
+  }finally{delete window[cb];script.remove()}};
+  script.src=CFG.SCRIPT_URL+'?action=list&code='+encodeURIComponent(a.code)+'&callback='+cb+'&_='+Date.now();
+  document.body.appendChild(script)
+}
+function normaliseRally(r){return{...r,rallyId:r.rallyId||r.id||('r'+Date.now()),person:r.person||r.host||'Mystery pirate',title:r.title||r.adventure||'Untitled rally',when:normaliseWhen(r.when),where:r.where||'',message:r.message||"I'm going. Is anyone coming?",responses:r.responses||{},status:r.status||'open'}}
+function normaliseWhen(value){if(!value)return'';if(Object.prototype.toString.call(value)==='[object Date]')return value.toISOString();return String(value)}
+function isExpired(value){let d=parseDate(value);if(!d)return false;return d.getTime()<Date.now()-30*60000}
+function parseDate(value){if(!value)return null;let d=new Date(value);if(isNaN(d.getTime()))return null;if(d.getFullYear()<2000)return null;return d}
+function formatWhen(value){let d=parseDate(value);if(!d)return value?esc(value):'Time not set';let now=new Date();let tomorrow=new Date(now);tomorrow.setDate(now.getDate()+1);let dateOpts={weekday:'short',day:'numeric',month:'short'};let time=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});if(d.toDateString()===now.toDateString())return 'Today at '+time;if(d.toDateString()===tomorrow.toDateString())return 'Tomorrow at '+time;return d.toLocaleDateString([],dateOpts)+' at '+time}
+function notify(text){const el=$('newAlert');el.textContent=text;el.classList.add('show');if(navigator.vibrate)navigator.vibrate([180,80,180]);playPing();setTimeout(()=>el.classList.remove('show'),6500)}
+function playPing(){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const osc=ctx.createOscillator();const gain=ctx.createGain();osc.type='sine';osc.frequency.value=740;gain.gain.value=.04;osc.connect(gain);gain.connect(ctx.destination);osc.start();setTimeout(()=>{osc.stop();ctx.close()},140)}catch(e){}}
 function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+refreshTimer=setInterval(loadRallies,30000);
 loadRallies();
-setInterval(()=>loadRallies(),30000);
 </script>
 </body>
 </html>
